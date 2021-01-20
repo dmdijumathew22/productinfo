@@ -13,7 +13,7 @@ public interface GenericDAO<T> {
     void remove(Long id); //DELETE (Http Verbs/Methods)
 
     T update(T entity); //PUT (Http Verbs/Methods)
-    String productInfo(int id);
+    DrinkDTO productInfo(int id);
     int count();
 
 }

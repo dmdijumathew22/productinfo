@@ -16,7 +16,7 @@ public class DrinkDAOImpl implements DrinkDAO {
     public DrinkDAOImpl() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/drinks?createDatabaseIfNotExist=true", "root", "admin");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/drinks?createDatabaseIfNotExist=true", "root", "root");
         } catch (ClassNotFoundException e) {
             System.out.println("Driver not found");
         } catch (SQLException e) {
@@ -42,14 +42,14 @@ public class DrinkDAOImpl implements DrinkDAO {
         }
         return drinks;
     }
-    public String productInfo(int id) {
+    public DrinkDTO productInfo(int id) {
     	
     	 try (PreparedStatement preparedStatement = conn.prepareStatement(FIND_SQL)) {
              preparedStatement.setInt(1, id);
              ResultSet rs = preparedStatement.executeQuery();
              if (rs.next()) {
             	DrinkDTO product = new DrinkDTO((long) rs.getLong("id"), rs.getString("name"), rs.getBoolean("good"));
-            	return product.toString();
+            	return product;
                 
              }
          } catch (SQLException e) {
@@ -57,7 +57,7 @@ public class DrinkDAOImpl implements DrinkDAO {
              e.printStackTrace();
          }
          
-    	return "Product not found";
+    	return null;
 		
     }
 

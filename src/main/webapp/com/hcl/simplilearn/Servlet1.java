@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.hcl.simplilearn.ProductInfo.drink.DrinkDAO;
 import com.hcl.simplilearn.ProductInfo.drink.DrinkDAOImpl;
+import com.hcl.simplilearn.ProductInfo.drink.DrinkDTO;
 
 /**
  * Servlet implementation class Servlet1
@@ -49,13 +50,16 @@ public class Servlet1 extends HttpServlet {
 		 String drinkId = request.getParameter("drink-id");
 	        PrintWriter out = response.getWriter();
 	        DrinkDAO d= new DrinkDAOImpl();
-	        out.println(d.productInfo((Integer.parseInt(drinkId))));
-	        // Use the drinkDAO .. get the drinkDTO
-	        // show the details
-	        // or if not found
-	        // show an error message
-
-	        //out.println("showing drink details - or an issue if not found");
+	        DrinkDTO d1 =(d.productInfo((Integer.parseInt(drinkId))));
+	        if (d1!=null) {
+	        System.out.println("Product found :  "+d1.toString());
+	        out.println("Product found <br>");
+	        out.println("Product Id : "+ d1.getId()+"<br>");
+	        out.println("Product Name : "+ d1.getName()+"<br>");
+	        out.println("Product is "+ (d1.isGood()? "Good.":"Bad."));}
+	        else 
+	        	 out.println("Product not found");
+	        
 	}
 
 }
